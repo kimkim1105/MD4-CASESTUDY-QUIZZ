@@ -20,12 +20,12 @@ public class QuestionController {
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<?> saveBlog(@RequestBody Question question){
+    public ResponseEntity<?> saveQuestion(@RequestBody Question question){
         questionService.save(question);
         return new ResponseEntity<>(new ResponMessage("create success"), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Question> findBlogById(@PathVariable Long id) {
+    public ResponseEntity<Question> findQuestionById(@PathVariable Long id) {
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -33,7 +33,7 @@ public class QuestionController {
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateBlog(@PathVariable Long id, @RequestBody Question question) {
+    public ResponseEntity<?> updateQuestion(@PathVariable Long id, @RequestBody Question question) {
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -43,7 +43,10 @@ public class QuestionController {
         return new ResponseEntity<>(new ResponMessage("update success"), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Question> deleteBlog(@PathVariable Long id) {
+    public ResponseEntity<Question> deleteQuestion(@PathVariable Long id) {
+        if (!questionService.checkQuestionInTest(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

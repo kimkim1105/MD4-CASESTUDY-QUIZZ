@@ -32,4 +32,12 @@ public class QuestionService implements IQuestionService {
     public void remove(Long id) {
         questionRepository.deleteById(id);
     }
+
+    @Override
+    public boolean checkQuestionInTest(Long id) {
+        if (questionRepository.checkQuestionInTest(id)==null){
+            return true;
+        }
+        return false;
+    }
 }

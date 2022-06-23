@@ -4,4 +4,5 @@ import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.service.IGeneralService;
 
 public interface IQuestionService extends IGeneralService<Question> {
+    boolean checkQuestionInTest(Long id);
 }

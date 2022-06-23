@@ -11,5 +11,4 @@ public interface ITestRepository extends JpaRepository<Test, Long> {
     Iterable<Test> findAllByUser (User user);
     Iterable<Test> findAllByNameContaining(String name);
     Iterable<Test> findAllByLevel (Level level);
-
 }
