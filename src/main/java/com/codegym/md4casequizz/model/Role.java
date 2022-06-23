@@ -1,23 +1,26 @@
 package com.codegym.md4casequizz.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "roles")
+@Table(name="roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
-    private String rolename;
+    @Enumerated(EnumType.STRING)
+    @NaturalId
+    @Column(length = 60)
+    private RoleName name;
 
     public Role() {
     }
 
-    public Role(Long id, String rolename) {
+    public Role(Long id, RoleName name) {
         this.id = id;
-        this.rolename = rolename;
+        this.name = name;
     }
 
     public Long getId() {
@@ -28,11 +31,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getRolename() {
-        return rolename;
+    public RoleName getName() {
+        return name;
     }
 
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
+    public void setName(RoleName name) {
+        this.name = name;
     }
 }
