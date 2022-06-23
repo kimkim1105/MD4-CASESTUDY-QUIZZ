@@ -26,30 +26,29 @@ public class Test {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
-    private User createUser;
+    private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createAt;
-
+    private Date date;
 
     @ManyToMany
     @JoinTable(name = "test_ques",
             joinColumns = @JoinColumn(name = "test_id"),inverseJoinColumns = @JoinColumn(name = "ques_id"))
     Set<Question> questions = new HashSet<>();
 
-    public Test(Long id, String name, User createUser, Set<Question> questions) {
+    public Test(Long id, String name, User user, Set<Question> questions) {
         this.id = id;
         this.name = name;
-        this.createUser = createUser;
+        this.date = date;
         this.questions = questions;
     }
 
-    public Test(String name, Level level, User createUser, Date createAt, Set<Question> questions) {
+    public Test(String name, Level level, User user, Date date, Set<Question> questions) {
         this.name = name;
         this.level = level;
-        this.createUser = createUser;
-        this.createAt = createAt;
+        this.user = user;
+        this.date = date;
         this.questions = questions;
     }
 
@@ -57,11 +56,11 @@ public class Test {
     }
 
     public Date getDate() {
-        return createAt;
+        return date;
     }
 
-    public void setDate(Date createAt) {
-        this.createAt = createAt;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Level getLevel() {
@@ -89,11 +88,11 @@ public class Test {
     }
 
     public User getCreateUser() {
-        return createUser;
+        return user;
     }
 
     public void setCreateUser(User createUser) {
-        this.createUser = createUser;
+        this.user = createUser;
     }
 
     public Set<Question> getQuestions() {
