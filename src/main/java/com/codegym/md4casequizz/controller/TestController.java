@@ -40,6 +40,35 @@ public class TestController {
     }
 
     @PostMapping
+    public ResponseEntity<Test> createBlog(@RequestBody Test test) {
+        test.setDate(new Date());
+        return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
+    }
+//
+//    @GetMapping("/list")
+//    public ModelAndView getAllBlog() {
+//        ModelAndView modelAndView = new ModelAndView("/blog/list");
+//        modelAndView.addObject("blogs", blogService.findAll());
+//        return modelAndView;
+//    }
+//
+//    @GetMapping
+//    public ResponseEntity<Iterable<Test>> findAll() {
+//        Iterable<Test> blogs = testService.findAll();
+//        return new ResponseEntity<>(blogs, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Blog> findById(@PathVariable Long id) {
+//        Optional<Blog> blog = blogService.findById(id);
+//        return new ResponseEntity<>(blog.get(), HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/search/{name}")
+//    public ResponseEntity<Iterable<Blog>> findByName(@PathVariable String name) {
+//        Iterable<Blog> blogs = blogService.findAllByNameContaining(name);
+//        return new ResponseEntity<>(blogs, HttpStatus.OK);
+//    }
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         test.setDate(new Date());
         return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
