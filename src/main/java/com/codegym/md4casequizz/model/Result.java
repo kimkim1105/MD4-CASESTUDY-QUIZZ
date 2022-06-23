@@ -1,8 +1,11 @@
 package com.codegym.md4casequizz.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "results")
@@ -14,6 +17,11 @@ public class Result {
     @JoinColumn(name = "test_id")
     @NotNull
     private Test test;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
@@ -28,7 +36,22 @@ public class Result {
         this.mark = mark;
     }
 
+    public Result(Test test, Date createAt, User testUser, Integer mark) {
+        this.test = test;
+        this.createAt = createAt;
+        this.testUser = testUser;
+        this.mark = mark;
+    }
+
     public Result() {
+    }
+
+    public Date getDate() {
+        return createAt;
+    }
+
+    public void setDate(Date createAt) {
+        this.createAt = createAt;
     }
 
     public Long getId() {
