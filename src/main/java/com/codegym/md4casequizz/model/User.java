@@ -11,39 +11,44 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
+//unique co tacs dung trung username va email thi khong cho tao
+@Table(name = "users",uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
-        }),
+       }),
         @UniqueConstraint(columnNames = {
                 "email"
         })
+
 })
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(min = 3,max = 50)
     private String name;
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(min = 3,max = 50)
     private String username;
     @NaturalId
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
+    //JsonInogre dung de ko lo mat khau ng dung
     @JsonIgnore
-    @NotBlank
-    @Size(min = 6, max = 100)
+    @Size(min = 6,max = 100)
     private String password;
+    //Lob dung de cho do dai chuyen anh truyen vao rat dai
     @Lob
     private String avatar;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
-    Set<Role> roles = new HashSet<>();
+    @JoinTable(name = "user_role",joinColumns =
+    @JoinColumn(name = "user_id"),inverseJoinColumns =
+    @JoinColumn(name = "role_id"))
+    Set<Role> roles=new HashSet<>();
 
     public User() {
     }
@@ -58,16 +63,20 @@ public class User {
         this.roles = roles;
     }
 
-    public User(  @NotBlank @Size(min = 3, max = 50)String name,
-                  @NotBlank @Size(min = 3, max = 50)String username,
-                  @NotBlank @Size(max = 50) @Email String email,
-                  @NotBlank @Size(min = 6, max = 100)String encode,
-                  String avatar) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = encode;
-        this.avatar = avatar;
+    public User( @NotBlank
+                 @Size(min = 3,max = 50)String name,
+                 @NotBlank
+                 @Size(min = 3,max = 50)String username,
+                 @NotBlank
+                 @Size(max = 50)
+                 @Email String email,
+                 String avatar,
+                 @NotBlank @Size(min = 6,max = 100) String encode) {
+        this.name=name;
+        this.username=username;
+        this.email=email;
+        this.avatar=avatar;
+        this.password=encode;
     }
 
     public Long getId() {
