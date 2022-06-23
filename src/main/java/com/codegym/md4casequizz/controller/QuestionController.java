@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -22,7 +20,8 @@ public class QuestionController {
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<?> saveBlog(@RequestBody Question blog){
+    public ResponseEntity<?> saveBlog(@RequestBody Question question){
+        questionService.save(question);
         return new ResponseEntity<>(new ResponMessage("create success"), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
@@ -32,5 +31,24 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateBlog(@PathVariable Long id, @RequestBody Question question) {
+        Optional<Question> questionOptional = questionService.findById(id);
+        if (!questionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        question.setId(questionOptional.get().getId());
+        questionService.save(question);
+        return new ResponseEntity<>(new ResponMessage("update success"), HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Question> deleteBlog(@PathVariable Long id) {
+        Optional<Question> questionOptional = questionService.findById(id);
+        if (!questionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        questionService.remove(id);
+        return new ResponseEntity<>(questionOptional.get(), HttpStatus.NO_CONTENT);
     }
 }
