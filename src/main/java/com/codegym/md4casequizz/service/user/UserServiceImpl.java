@@ -1,8 +1,7 @@
-package com.codegym.md4casequizz.service.impl;
+package com.codegym.md4casequizz.service.user;
 
 import com.codegym.md4casequizz.model.User;
 import com.codegym.md4casequizz.repository.IUserRepository;
-import com.codegym.md4casequizz.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,7 @@ package com.codegym.md4casequizz.controller;
 
 import com.codegym.md4casequizz.dto.response.ResponMessage;
 import com.codegym.md4casequizz.model.User;
-import com.codegym.md4casequizz.service.impl.UserServiceImpl;
+import com.codegym.md4casequizz.service.user.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.codegym.md4casequizz.service;
+package com.codegym.md4casequizz.service.user;
 
 import com.codegym.md4casequizz.model.User;
 
