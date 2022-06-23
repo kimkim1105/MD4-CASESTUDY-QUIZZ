@@ -2,10 +2,7 @@ package com.codegym.md4casequizz.controller;
 
 import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.model.Test;
-<<<<<<< HEAD
-=======
 import com.codegym.md4casequizz.service.level.ILevelService;
->>>>>>> 2979f2aec8b528307f62a67f2ba916238f45d963
 import com.codegym.md4casequizz.service.question.IQuestionService;
 import com.codegym.md4casequizz.service.test.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +34,6 @@ public class TestController {
     }
 
     @PostMapping
-<<<<<<< HEAD
     public ResponseEntity<Test> createBlog(@RequestBody Test test) {
         test.setDate(new Date());
         return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
@@ -50,11 +46,11 @@ public class TestController {
 //        return modelAndView;
 //    }
 //
-    @GetMapping
-    public ResponseEntity<Iterable<Test>> findAll() {
-        Iterable<Test> blogs = testService.findAll();
-        return new ResponseEntity<>(blogs, HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<Iterable<Test>> findAll() {
+//        Iterable<Test> blogs = testService.findAll();
+//        return new ResponseEntity<>(blogs, HttpStatus.OK);
+//    }
 //
 //    @GetMapping("/{id}")
 //    public ResponseEntity<Blog> findById(@PathVariable Long id) {
@@ -67,7 +63,6 @@ public class TestController {
 //        Iterable<Blog> blogs = blogService.findAllByNameContaining(name);
 //        return new ResponseEntity<>(blogs, HttpStatus.OK);
 //    }
-=======
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         test.setDate(new Date());
         return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
@@ -90,7 +85,6 @@ public class TestController {
         Iterable<Test> tests = testService.findAllByNameContaining(name);
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
->>>>>>> 2979f2aec8b528307f62a67f2ba916238f45d963
 //
 //    @GetMapping("/next3blog/{row}")
 //    public ResponseEntity<Iterable<Blog>> getNext3Blog(@PathVariable int row) {

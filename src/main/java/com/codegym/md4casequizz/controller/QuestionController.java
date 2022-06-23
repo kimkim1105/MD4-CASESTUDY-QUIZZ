@@ -16,12 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/questions")
 public class QuestionController {
+
+    @Autowired
+    private ITestService testService;
 
     @Autowired
     private IQuestionService questionService;
@@ -52,24 +57,20 @@ public class QuestionController {
         questionService.save(question);
         return new ResponseEntity<>(new ResponMessage("update success"), HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Question> deleteQuestion(@PathVariable Long id) {
-        if (!questionService.checkQuestionInTest(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        List<Test> tests = (List<Test>) testService.findAllByQuestions(questionOptional.get());
+        if (tests.size()!=0) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
         questionService.remove(id);
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.NO_CONTENT);
-
-
-    @Autowired
-    private IQuestionService questionService;
-
-    @Autowired
-    private ITestService testService;
+    }
 
     @GetMapping("/{id}/tests")
     public ResponseEntity<Iterable<Test>> findTestByQuestion(@PathVariable Optional<String> id) {
