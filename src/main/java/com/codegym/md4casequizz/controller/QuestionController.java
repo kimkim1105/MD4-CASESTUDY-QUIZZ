@@ -2,12 +2,11 @@ package com.codegym.md4casequizz.controller;
 
 
 import com.codegym.md4casequizz.dto.response.ResponMessage;
-import com.codegym.md4casequizz.model.Question;
+import com.codegym.md4casequizz.model.*;
+import com.codegym.md4casequizz.service.answer.IAnswerService;
 import com.codegym.md4casequizz.service.question.IQuestionService;
 
 import com.codegym.md4casequizz.model.Question;
-import com.codegym.md4casequizz.model.Test;
-import com.codegym.md4casequizz.model.User;
 import com.codegym.md4casequizz.service.question.IQuestionService;
 import com.codegym.md4casequizz.service.test.ITestService;
 import com.codegym.md4casequizz.service.user.UserServiceImpl;
@@ -30,6 +29,10 @@ public class QuestionController {
 
     @Autowired
     private IQuestionService questionService;
+
+    @Autowired
+    private IAnswerService answerService;
+
     @GetMapping
     public ResponseEntity<Iterable<Question>> showListQuestion(){
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
@@ -77,5 +80,12 @@ public class QuestionController {
         Optional<Question> question = questionService.findById(Long.valueOf(id.get()));
         Iterable<Test> tests = testService.findAllByQuestions(question.get());
         return new ResponseEntity<>(tests, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/answers")
+    public ResponseEntity<Iterable<Answer>> findAnswerByQuestion(@PathVariable Optional<String> id) {
+        Optional<Question> question = questionService.findById(Long.valueOf(id.get()));
+        Iterable<Answer> answers = answerService.findAllByQuestion(question.get());
+        return new ResponseEntity<>(answers, HttpStatus.OK);
     }
 }

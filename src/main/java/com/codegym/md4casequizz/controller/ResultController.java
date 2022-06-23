@@ -19,7 +19,7 @@ public class ResultController {
     IResultService resultService;
 
     @PostMapping
-    public ResponseEntity<Result> createTest(@RequestBody Result result) {
+    public ResponseEntity<Result> createResult(@RequestBody Result result) {
         result.setDate(new Date());
         return new ResponseEntity<>(resultService.save(result), HttpStatus.CREATED);
     }
