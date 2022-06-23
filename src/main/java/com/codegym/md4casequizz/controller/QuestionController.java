@@ -1,32 +1,28 @@
 package com.codegym.md4casequizz.controller;
 
-<<<<<<< HEAD
+
 import com.codegym.md4casequizz.dto.response.ResponMessage;
 import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.service.question.IQuestionService;
-=======
+
 import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.model.Test;
 import com.codegym.md4casequizz.model.User;
 import com.codegym.md4casequizz.service.question.IQuestionService;
 import com.codegym.md4casequizz.service.test.ITestService;
 import com.codegym.md4casequizz.service.user.UserServiceImpl;
->>>>>>> 2979f2aec8b528307f62a67f2ba916238f45d963
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-<<<<<<< HEAD
-=======
-
->>>>>>> 2979f2aec8b528307f62a67f2ba916238f45d963
 import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/questions")
 public class QuestionController {
-<<<<<<< HEAD
+
     @Autowired
     private IQuestionService questionService;
     @GetMapping
@@ -67,7 +63,7 @@ public class QuestionController {
         }
         questionService.remove(id);
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.NO_CONTENT);
-=======
+
 
     @Autowired
     private IQuestionService questionService;
@@ -80,6 +76,5 @@ public class QuestionController {
         Optional<Question> question = questionService.findById(Long.valueOf(id.get()));
         Iterable<Test> tests = testService.findAllByQuestions(question.get());
         return new ResponseEntity<>(tests, HttpStatus.OK);
->>>>>>> 2979f2aec8b528307f62a67f2ba916238f45d963
     }
 }
