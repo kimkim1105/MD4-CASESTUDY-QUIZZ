@@ -1,4 +1,4 @@
-package com.codegym.md4casequizz.service;
+package com.codegym.md4casequizz.service.role;
 
 import com.codegym.md4casequizz.model.Role;
 import com.codegym.md4casequizz.model.RoleName;
