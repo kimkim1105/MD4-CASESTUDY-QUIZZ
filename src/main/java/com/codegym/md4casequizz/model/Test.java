@@ -27,7 +27,6 @@ public class Test {
     @JoinColumn(name = "user_id")
     @NotNull
     private User user;
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;

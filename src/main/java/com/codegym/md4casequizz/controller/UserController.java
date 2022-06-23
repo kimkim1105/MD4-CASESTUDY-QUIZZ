@@ -1,7 +1,9 @@
 package com.codegym.md4casequizz.controller;
 
 import com.codegym.md4casequizz.dto.response.ResponMessage;
+import com.codegym.md4casequizz.model.Test;
 import com.codegym.md4casequizz.model.User;
+import com.codegym.md4casequizz.service.test.ITestService;
 import com.codegym.md4casequizz.service.user.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,13 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("users")
 public class UserController {
+
     @Autowired
     UserServiceImpl userService;
+
+    @Autowired
+    private ITestService testService;
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
         Optional<User> user=userService.findById(id);
@@ -27,10 +34,16 @@ public class UserController {
         return new ResponseEntity<>(new ResponMessage("delete success"),HttpStatus.OK);
     }
 
-
     @GetMapping()
     public ResponseEntity<Iterable<User>> showListUser(){
         return new ResponseEntity<>(userService.showList(),HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/tests")
+    public ResponseEntity<Iterable<Test>> findTestByUser(@PathVariable Optional<String> id) {
+        Optional<User> userOptional = userService.findById(Long.valueOf(id.get()));
+        Iterable<Test> tests = testService.findAllByUser(userOptional.get());
+        return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 }
 
