@@ -20,26 +20,26 @@ public class Result {
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createAt;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
-    private User testUser;
+    private User user;
     @NotBlank
     private Integer mark;
 
-    public Result(Long id, Test test, User testUser, Integer mark) {
+    public Result(Long id, Test test, User user, Integer mark) {
         this.id = id;
         this.test = test;
-        this.testUser = testUser;
+        this.user = user;
         this.mark = mark;
     }
 
-    public Result(Test test, Date createAt, User testUser, Integer mark) {
+    public Result(Test test, Date date, User user, Integer mark) {
         this.test = test;
-        this.createAt = createAt;
-        this.testUser = testUser;
+        this.date = date;
+        this.user = user;
         this.mark = mark;
     }
 
@@ -47,11 +47,11 @@ public class Result {
     }
 
     public Date getDate() {
-        return createAt;
+        return date;
     }
 
-    public void setDate(Date createAt) {
-        this.createAt = createAt;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Long getId() {
@@ -71,11 +71,11 @@ public class Result {
     }
 
     public User getTestUser() {
-        return testUser;
+        return user;
     }
 
-    public void setTestUser(User testUser) {
-        this.testUser = testUser;
+    public void setTestUser(User user) {
+        this.user = user;
     }
 
     public Integer getMark() {
