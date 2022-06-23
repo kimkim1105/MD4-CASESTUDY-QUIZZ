@@ -1,7 +1,6 @@
 package com.codegym.md4casequizz.model;
 
 public enum RoleName {
-    USER,
-    PM,
-    ADMIN
+    ROLE_USER,
+    ROLE_ADMIN
 }

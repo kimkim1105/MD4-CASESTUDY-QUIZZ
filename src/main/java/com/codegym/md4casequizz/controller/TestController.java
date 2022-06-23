@@ -2,6 +2,10 @@ package com.codegym.md4casequizz.controller;
 
 import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.model.Test;
+<<<<<<< HEAD
+=======
+import com.codegym.md4casequizz.service.level.ILevelService;
+>>>>>>> 2979f2aec8b528307f62a67f2ba916238f45d963
 import com.codegym.md4casequizz.service.question.IQuestionService;
 import com.codegym.md4casequizz.service.test.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,8 @@ public class TestController {
     @Autowired
     private IQuestionService questionService;
 
+    @Autowired
+    private ILevelService levelService;
 
     @ModelAttribute("question")
     public Iterable<Question> questions(){
@@ -31,6 +37,7 @@ public class TestController {
     }
 
     @PostMapping
+<<<<<<< HEAD
     public ResponseEntity<Test> createBlog(@RequestBody Test test) {
         test.setDate(new Date());
         return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
@@ -60,6 +67,30 @@ public class TestController {
 //        Iterable<Blog> blogs = blogService.findAllByNameContaining(name);
 //        return new ResponseEntity<>(blogs, HttpStatus.OK);
 //    }
+=======
+    public ResponseEntity<Test> createTest(@RequestBody Test test) {
+        test.setDate(new Date());
+        return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<Iterable<Test>> findAll() {
+        Iterable<Test> tests = testService.findAll();
+        return new ResponseEntity<>(tests, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Test> findById(@PathVariable Long id) {
+        Optional<Test> test = testService.findById(id);
+        return new ResponseEntity<>(test.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<Iterable<Test>> findByName(@PathVariable String name) {
+        Iterable<Test> tests = testService.findAllByNameContaining(name);
+        return new ResponseEntity<>(tests, HttpStatus.OK);
+    }
+>>>>>>> 2979f2aec8b528307f62a67f2ba916238f45d963
 //
 //    @GetMapping("/next3blog/{row}")
 //    public ResponseEntity<Iterable<Blog>> getNext3Blog(@PathVariable int row) {

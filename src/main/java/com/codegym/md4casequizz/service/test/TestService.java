@@ -1,6 +1,7 @@
 package com.codegym.md4casequizz.service.test;
 
 import com.codegym.md4casequizz.model.Level;
+import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.model.Test;
 import com.codegym.md4casequizz.model.User;
 import com.codegym.md4casequizz.repository.ITestRepository;
@@ -48,4 +49,11 @@ public class TestService implements ITestService{
     public Iterable<Test> findAllByLevel(Level level) {
         return testRepository.findAllByLevel(level);
     }
+
+    @Override
+    public Iterable<Test> findAllByQuestions(Question question) {
+        return testRepository.findAllByQuestions(question);
+    }
+
+
 }
