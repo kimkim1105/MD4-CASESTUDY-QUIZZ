@@ -16,8 +16,7 @@ public class Answer {
     @NotBlank
     @Size(min = 3, max = 255)
     private String content;
-    @JsonIgnore
-    @NotBlank
+    @NotNull
     private Boolean status;
     @ManyToOne
     @JoinColumn(name = "question_id")
