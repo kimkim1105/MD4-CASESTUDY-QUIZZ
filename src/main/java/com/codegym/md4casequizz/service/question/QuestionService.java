@@ -1,8 +1,8 @@
 package com.codegym.md4casequizz.service.question;
 
+import com.codegym.md4casequizz.model.Category;
 import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.repository.IQuestionRepository;
-import com.codegym.md4casequizz.service.question.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +36,10 @@ public class QuestionService implements IQuestionService {
     @Override
     public Iterable<Question> searchQuestion(String content, Long type_id, Long category_id, Long level_id) {
         return questionRepository.searchQuestion(content,type_id,category_id,level_id);
+    }
+
+    @Override
+    public Iterable<Question> findAllByCategory(Category category) {
+        return questionRepository.findAllByCategory(category);
     }
 }
