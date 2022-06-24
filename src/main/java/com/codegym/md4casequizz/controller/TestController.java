@@ -1,9 +1,10 @@
 package com.codegym.md4casequizz.controller;
 
-import com.codegym.md4casequizz.model.Question;
-import com.codegym.md4casequizz.model.Test;
+import com.codegym.md4casequizz.dto.response.ResponMessage;
+import com.codegym.md4casequizz.model.*;
 import com.codegym.md4casequizz.service.level.ILevelService;
 import com.codegym.md4casequizz.service.question.IQuestionService;
+import com.codegym.md4casequizz.service.result.IResultService;
 import com.codegym.md4casequizz.service.test.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +29,14 @@ public class TestController {
     @Autowired
     private ILevelService levelService;
 
+    @Autowired
+    private IResultService resultService;
+
     @ModelAttribute("question")
-    public Iterable<Question> questions(){
+    public Iterable<Question> questions() {
         return questionService.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<Test> createBlog(@RequestBody Test test) {
-        test.setDate(new Date());
-        return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
-    }
 //
 //    @GetMapping("/list")
 //    public ModelAndView getAllBlog() {
@@ -63,6 +62,8 @@ public class TestController {
 //        Iterable<Blog> blogs = blogService.findAllByNameContaining(name);
 //        return new ResponseEntity<>(blogs, HttpStatus.OK);
 //    }
+
+    @PostMapping
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         test.setDate(new Date());
         return new ResponseEntity<>(testService.save(test), HttpStatus.CREATED);
@@ -85,6 +86,36 @@ public class TestController {
         Iterable<Test> tests = testService.findAllByNameContaining(name);
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/results")
+    public ResponseEntity<Iterable<Result>> findResultByTest(@PathVariable Optional<String> id) {
+        Optional<Test> testOptional = testService.findById(Long.valueOf(id.get()));
+        Iterable<Result> results = resultService.findAllByTest(testOptional.get());
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Test> delete(@PathVariable Long id) {
+        Optional<Test> testOptional = testService.findById(id);
+        if (!testOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        testService.remove(id);
+        return new ResponseEntity<>(testOptional.get(), HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateBlog(@PathVariable Long id, @RequestBody Test test) {
+        Optional<Test> testOptional = testService.findById(id);
+        if (!testOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        test.setId(testOptional.get().getId());
+        test.setDate(new Date());
+        testService.save(test);
+        return new ResponseEntity<>(new ResponMessage("update success"), HttpStatus.OK);
+    }
+
 //
 //    @GetMapping("/next3blog/{row}")
 //    public ResponseEntity<Iterable<Blog>> getNext3Blog(@PathVariable int row) {
@@ -98,26 +129,6 @@ public class TestController {
 //        return new ResponseEntity<>(blogs, HttpStatus.OK);
 //    }
 //
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Blog> delete(@PathVariable Long id) {
-//        Optional<Blog> blogOptional = blogService.findById(id);
-//        if (!blogOptional.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        blogService.remove(id);
-//        return new ResponseEntity<>(blogOptional.get(), HttpStatus.NO_CONTENT);
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Blog> edit(@RequestBody Blog blog, @PathVariable Long id) {
-//        Optional<Blog> blogOptional = blogService.findById(id);
-//        if(blog.getImage() != "") {
-//            blog.setImage(blogOptional.get().getImage());
-//        }
-//        blog.setId(id);
-//        blog.setDate(blogOptional.get().getDate());
-//        blogService.save(blog);
-//        return new ResponseEntity<>(blogService.findById(id).get(), HttpStatus.OK);
-//    }
+
 
 }

@@ -1,8 +1,11 @@
 package com.codegym.md4casequizz.controller;
 
 import com.codegym.md4casequizz.dto.response.ResponMessage;
+import com.codegym.md4casequizz.model.Result;
 import com.codegym.md4casequizz.model.Test;
 import com.codegym.md4casequizz.model.User;
+import com.codegym.md4casequizz.repository.IResultRepository;
+import com.codegym.md4casequizz.service.result.IResultService;
 import com.codegym.md4casequizz.service.test.ITestService;
 import com.codegym.md4casequizz.service.user.UserServiceImpl;
 
@@ -24,6 +27,9 @@ public class UserController {
     @Autowired
     private ITestService testService;
 
+    @Autowired
+    IResultService resultService;
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
         Optional<User> user=userService.findById(id);
@@ -44,6 +50,13 @@ public class UserController {
         Optional<User> userOptional = userService.findById(Long.valueOf(id.get()));
         Iterable<Test> tests = testService.findAllByUser(userOptional.get());
         return new ResponseEntity<>(tests, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/results")
+    public ResponseEntity<Iterable<Result>> findResultByUser(@PathVariable Optional<String> id) {
+        Optional<User> userOptional = userService.findById(Long.valueOf(id.get()));
+        Iterable<Result> results = resultService.findAllByUser(userOptional.get());
+        return new ResponseEntity<>(results, HttpStatus.OK);
     }
 }
 

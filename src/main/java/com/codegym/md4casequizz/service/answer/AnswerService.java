@@ -1,6 +1,7 @@
 package com.codegym.md4casequizz.service.answer;
 
 import com.codegym.md4casequizz.model.Answer;
+import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.repository.IAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,10 @@ public class AnswerService implements IAnswerService {
     @Override
     public void remove(Long id) {
         answerRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Answer> findAllByQuestion(Question question) {
+        return answerRepository.findAllByQuestion(question);
     }
 }

@@ -7,11 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IUserRepository extends JpaRepository<User,Long> {
+public interface IUserRepository extends JpaRepository<User, Long> {
     //tim kiem co ton tai trong DB khong
     Optional<User> findByUsername(String name);
+
     //kt xem user da co torng DB chua khi tao du lieu
-   Boolean existsByUsername(String name);
+    Boolean existsByUsername(String name);
+
     //kt xem email da co torng DB chua khi tao du lieu
-Boolean existsByEmail(String email);
+    Boolean existsByEmail(String email);
 }
