@@ -50,6 +50,14 @@ public class QuestionController {
         }
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
     }
+    @GetMapping("/new-question")
+    public ResponseEntity<Question> findNewQuestion() {
+        Optional<Question> questionOptional = questionService.findNeweastQuestion();
+        if (!questionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
+    }
     @GetMapping("/search")
     public ResponseEntity<Iterable<Question>> searchQuestion(@RequestParam String contents,
                                                    @RequestParam Long type_id,
