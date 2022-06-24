@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("categories")
+@RequestMapping("/categories")
 public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
@@ -40,5 +40,13 @@ public class CategoryController {
         Optional<Category> category = categoryService.findById(Long.valueOf(id.get()));
         Iterable<Question> questions = questionService.findAllByCategory(category.get());
         return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<Iterable<Category>> listCategory() {
+        Iterable<Category> categories = categoryService.findAll();
+        if (categories != null) {
+            return new ResponseEntity<>(categories, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
