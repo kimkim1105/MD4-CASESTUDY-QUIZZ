@@ -48,12 +48,12 @@ public class QuestionController {
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
     }
     @GetMapping("/search")
-    public ResponseEntity<Iterable<Question>> searchQuestion(@RequestParam String content,
+    public ResponseEntity<Iterable<Question>> searchQuestion(@RequestParam String contents,
                                                    @RequestParam Long type_id,
                                                    @RequestParam Long category_id,
                                                    @RequestParam Long level_id) {
 
-        return new ResponseEntity<>(questionService.searchQuestion("%"+content+"%"
+        return new ResponseEntity<>(questionService.searchQuestion("%"+contents+"%"
         ,type_id,category_id,level_id), HttpStatus.OK);
     }
     @PutMapping("/{id}")

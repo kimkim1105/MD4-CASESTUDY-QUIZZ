@@ -34,7 +34,7 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public Iterable<Question> searchQuestion(String content, Long type_id, Long category_id, Long level_id) {
-        return questionRepository.searchQuestion(content,type_id,category_id,level_id);
+    public Iterable<Question> searchQuestion(String contents, Long type_id, Long category_id, Long level_id) {
+        return questionRepository.searchQuestion(contents,type_id,category_id,level_id);
     }
 }
