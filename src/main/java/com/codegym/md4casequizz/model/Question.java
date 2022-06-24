@@ -19,6 +19,10 @@ public class Question {
     @NotNull
     private Level level;
     @ManyToOne
+    @JoinColumn(name = "type_id")
+    @NotNull
+    private Type type;
+    @ManyToOne
     @JoinColumn(name = "category_id")
     @NotNull
     private Category category;
@@ -59,6 +63,14 @@ public class Question {
 
     public Category getCategory() {
         return category;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public void setCategory(Category category) {
