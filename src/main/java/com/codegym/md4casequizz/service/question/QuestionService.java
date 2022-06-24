@@ -32,4 +32,9 @@ public class QuestionService implements IQuestionService {
     public void remove(Long id) {
         questionRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Question> searchQuestion(String content, Long type_id, Long category_id, Long level_id) {
+        return questionRepository.searchQuestion(content,type_id,category_id,level_id);
+    }
 }

@@ -47,6 +47,15 @@ public class QuestionController {
         }
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
     }
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<Question>> searchQuestion(@RequestParam String content,
+                                                   @RequestParam Long type_id,
+                                                   @RequestParam Long category_id,
+                                                   @RequestParam Long level_id) {
+
+        return new ResponseEntity<>(questionService.searchQuestion("%"+content+"%"
+        ,type_id,category_id,level_id), HttpStatus.OK);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<?> updateQuestion(@PathVariable Long id, @RequestBody Question question) {
         Optional<Question> questionOptional = questionService.findById(id);

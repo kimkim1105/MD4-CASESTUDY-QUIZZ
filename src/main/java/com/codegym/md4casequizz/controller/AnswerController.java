@@ -17,16 +17,16 @@ public class AnswerController {
     @Autowired
     private IAnswerService answerService;
     @GetMapping
-    public ResponseEntity<Iterable<Answer>> showListQuestion(){
+    public ResponseEntity<Iterable<Answer>> showListAnswer(){
         return new ResponseEntity<>(answerService.findAll(), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<?> saveBlog(@RequestBody Answer answer){
+    public ResponseEntity<?> saveAnswer(@RequestBody Answer answer){
         answerService.save(answer);
         return new ResponseEntity<>(new ResponMessage("create success"), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Answer> findBlogById(@PathVariable Long id) {
+    public ResponseEntity<Answer> findAnswerById(@PathVariable Long id) {
         Optional<Answer> answerOptional = answerService.findById(id);
         if (!answerOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -34,7 +34,7 @@ public class AnswerController {
         return new ResponseEntity<>(answerOptional.get(), HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateBlog(@PathVariable Long id, @RequestBody Answer answer) {
+    public ResponseEntity<?> updateAnswer(@PathVariable Long id, @RequestBody Answer answer) {
         Optional<Answer> answerOptional = answerService.findById(id);
         if (!answerOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,7 +44,7 @@ public class AnswerController {
         return new ResponseEntity<>(new ResponMessage("update success"), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Answer> deleteBlog(@PathVariable Long id) {
+    public ResponseEntity<Answer> deleteAnswer(@PathVariable Long id) {
         Optional<Answer> answerOptional = answerService.findById(id);
         if (!answerOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
