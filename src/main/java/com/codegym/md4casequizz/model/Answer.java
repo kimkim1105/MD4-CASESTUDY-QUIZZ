@@ -1,6 +1,7 @@
 package com.codegym.md4casequizz.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ public class Answer {
     @NotBlank
     @Size(min = 3, max = 255)
     private String content;
+
     @NotNull
     private Boolean status;
     @ManyToOne

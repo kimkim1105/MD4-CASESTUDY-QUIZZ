@@ -39,8 +39,8 @@ public class QuestionController {
     }
     @PostMapping
     public ResponseEntity<?> saveQuestion(@RequestBody Question question){
-        questionService.save(question);
-        return new ResponseEntity<>(new ResponMessage("create success"), HttpStatus.CREATED);
+//        questionService.save(question);
+        return new ResponseEntity<>(questionService.save(question), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Question> findQuestionById(@PathVariable Long id) {
@@ -104,5 +104,11 @@ public class QuestionController {
         Optional<Question> question = questionService.findById(Long.valueOf(id.get()));
         Iterable<Answer> answers = answerService.findAllByQuestion(question.get());
         return new ResponseEntity<>(answers, HttpStatus.OK);
+    }
+    @GetMapping("/{test_id}/question")
+    public ResponseEntity<Iterable<Question>> getListCorrectQuestionByTest(@PathVariable Optional<String> test_id) {
+//        Optional<Test> test = testService.findById(id);
+        Iterable<Question> questionList = questionService.getListQuestionByTest(Long.valueOf(test_id.get()));
+        return new ResponseEntity<>(questionList, HttpStatus.OK);
     }
 }
