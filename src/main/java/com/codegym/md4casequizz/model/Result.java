@@ -6,6 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "results")
@@ -15,7 +18,6 @@ public class Result {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "test_id")
-    @NotNull
     private Test test;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -24,10 +26,14 @@ public class Result {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull
+//    @NotBlank
     private User user;
-    @NotBlank
     private Integer mark;
+
+    @ManyToMany
+    @JoinTable(name = "result_answer",
+            joinColumns = @JoinColumn(name = "result_id"),inverseJoinColumns = @JoinColumn(name = "answer_id"))
+    List<Answer> answers;
 
     public Result(Long id, Test test, User user, Integer mark) {
         this.id = id;
@@ -44,6 +50,22 @@ public class Result {
     }
 
     public Result() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public Date getDate() {
@@ -68,14 +90,6 @@ public class Result {
 
     public void setTest(Test test) {
         this.test = test;
-    }
-
-    public User getTestUser() {
-        return user;
-    }
-
-    public void setTestUser(User user) {
-        this.user = user;
     }
 
     public Integer getMark() {

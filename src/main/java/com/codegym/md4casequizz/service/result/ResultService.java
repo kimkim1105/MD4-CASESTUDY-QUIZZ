@@ -1,5 +1,6 @@
 package com.codegym.md4casequizz.service.result;
 
+import com.codegym.md4casequizz.model.Answer;
 import com.codegym.md4casequizz.model.Result;
 import com.codegym.md4casequizz.model.Test;
 import com.codegym.md4casequizz.model.User;
@@ -44,4 +45,6 @@ public class ResultService implements IResultService{
     public Iterable<Result> findAllByTest(Test test) {
         return resultRepository.findAllByTest(test);
     }
+
+
 }

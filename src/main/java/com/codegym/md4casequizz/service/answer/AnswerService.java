@@ -37,4 +37,8 @@ public class AnswerService implements IAnswerService {
     public Iterable<Answer> findAllByQuestion(Question question) {
         return answerRepository.findAllByQuestion(question);
     }
+    @Override
+    public Iterable<Answer> getWrongAnswer(Long test_id, Long result_id) {
+        return answerRepository.getWrongAnswer(test_id, result_id);
+    }
 }
