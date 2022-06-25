@@ -18,8 +18,10 @@ import java.util.Optional;
 public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
+
     @Autowired
     private IQuestionService questionService;
+
     @PostMapping
     public ResponseEntity<?> saveCategory(@RequestBody Category category){
         categoryService.save(category);

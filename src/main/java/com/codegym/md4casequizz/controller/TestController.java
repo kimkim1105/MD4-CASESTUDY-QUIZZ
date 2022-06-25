@@ -37,32 +37,6 @@ public class TestController {
         return questionService.findAll();
     }
 
-//
-//    @GetMapping("/list")
-//    public ModelAndView getAllBlog() {
-//        ModelAndView modelAndView = new ModelAndView("/blog/list");
-//        modelAndView.addObject("blogs", blogService.findAll());
-//        return modelAndView;
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<Iterable<Test>> findAll() {
-//        Iterable<Test> blogs = testService.findAll();
-//        return new ResponseEntity<>(blogs, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Blog> findById(@PathVariable Long id) {
-//        Optional<Blog> blog = blogService.findById(id);
-//        return new ResponseEntity<>(blog.get(), HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/search/{name}")
-//    public ResponseEntity<Iterable<Blog>> findByName(@PathVariable String name) {
-//        Iterable<Blog> blogs = blogService.findAllByNameContaining(name);
-//        return new ResponseEntity<>(blogs, HttpStatus.OK);
-//    }
-
     @PostMapping
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         test.setDate(new Date());
@@ -94,6 +68,13 @@ public class TestController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/questions")
+    public ResponseEntity<Iterable<Question>> findQuestionByTest(@PathVariable Optional<String> id) {
+        Optional<Test> testOptional = testService.findById(Long.valueOf(id.get()));
+        Iterable<Question> questions = testOptional.get().getQuestions();
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Test> delete(@PathVariable Long id) {
         Optional<Test> testOptional = testService.findById(id);
@@ -115,20 +96,6 @@ public class TestController {
         testService.save(test);
         return new ResponseEntity<>(new ResponMessage("update success"), HttpStatus.OK);
     }
-
-//
-//    @GetMapping("/next3blog/{row}")
-//    public ResponseEntity<Iterable<Blog>> getNext3Blog(@PathVariable int row) {
-//        Iterable<Blog> blogs = blogService.getNext3Blog(row);
-//        return new ResponseEntity<>(blogs, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/top3")
-//    public ResponseEntity<Iterable<Blog>> getTop3() {
-//        Iterable<Blog> blogs = blogService.getTop3();
-//        return new ResponseEntity<>(blogs, HttpStatus.OK);
-//    }
-//
 
 
 }
