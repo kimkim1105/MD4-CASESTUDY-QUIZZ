@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.codegym.md4casequizz.model.Role;
 
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("users")
 public class UserController {
+
+
 
     @Autowired
     UserServiceImpl userService;
@@ -36,7 +39,9 @@ public class UserController {
         if (!user.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        userService.deleteById(user.get().getId());
+            userService.deleteById(user.get().getId());
+
+
         return new ResponseEntity<>(new ResponMessage("delete success"),HttpStatus.OK);
     }
 
@@ -57,6 +62,14 @@ public class UserController {
         Optional<User> userOptional = userService.findById(Long.valueOf(id.get()));
         Iterable<Result> results = resultService.findAllByUser(userOptional.get());
         return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+    @GetMapping("findbyid/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        Optional<User> user=userService.findById(id);
+        if (!user.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user.get(), HttpStatus.OK);
     }
 }
 

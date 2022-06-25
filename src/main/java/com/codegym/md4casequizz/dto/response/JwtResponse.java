@@ -15,16 +15,16 @@ public class JwtResponse {
     public JwtResponse() {
     }
 
-    public JwtResponse(Long id, String token, String type, String name, Collection<? extends GrantedAuthority> roles) {
+    public JwtResponse(Long id, String token, String name, Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.token = token;
-        this.type = type;
         this.name = name;
         this.roles = roles;
     }
 
-    public JwtResponse(String token, String name,String avatar, Collection<? extends GrantedAuthority> authorities) {
-   this.token=token;
+    public JwtResponse(Long id,String token, String name,String avatar, Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.token=token;
    this.name=name;
    this.avatar=avatar;
    this.roles=authorities;
