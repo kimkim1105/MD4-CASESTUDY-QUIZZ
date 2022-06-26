@@ -86,12 +86,12 @@ public class Test {
         this.name = name;
     }
 
-    public User getCreateUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setCreateUser(User createUser) {
-        this.user = createUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Question> getQuestions() {

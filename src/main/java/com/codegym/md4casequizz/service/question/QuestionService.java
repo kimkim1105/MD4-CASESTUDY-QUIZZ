@@ -1,8 +1,9 @@
 package com.codegym.md4casequizz.service.question;
 
+import com.codegym.md4casequizz.model.Category;
 import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.repository.IQuestionRepository;
-import com.codegym.md4casequizz.service.question.IQuestionService;
+import com.codegym.md4casequizz.repository.ITestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ import java.util.Optional;
 public class QuestionService implements IQuestionService {
     @Autowired
     private IQuestionRepository questionRepository;
+
+    @Autowired
+    private ITestRepository testRepository;
 
     @Override
     public Iterable<Question> findAll() {
@@ -31,5 +35,25 @@ public class QuestionService implements IQuestionService {
     @Override
     public void remove(Long id) {
         questionRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Question> searchQuestion(String contents, Long type_id, Long category_id, Long level_id) {
+        return questionRepository.searchQuestion(contents,type_id,category_id,level_id);
+    }
+
+    @Override
+    public Iterable<Question> findAllByCategory(Category category) {
+        return questionRepository.findAllByCategory(category);
+    }
+
+    @Override
+    public Optional<Question> findNeweastQuestion() {
+        return questionRepository.findNeweastQuestion();
+    }
+
+    @Override
+    public Iterable<Question> getListQuestionByTest(Long test_id) {
+        return testRepository.getListQuestionByTest(test_id);
     }
 }

@@ -65,13 +65,13 @@ public class AuthController {
         strRoles.forEach(role -> {
             switch (role) {
                 case "admin":
-                        Role adminRole=roleService.findByName(RoleName.ADMIN).orElseThrow(
+                        Role adminRole=roleService.findByName(RoleName.ROLE_ADMIN).orElseThrow(
                                 ()->new RuntimeException("Role not found")
                         );
                 roles.add(adminRole);
                 break;
                 default:
-                    Role userRole=roleService.findByName(RoleName.USER).orElseThrow(
+                    Role userRole=roleService.findByName(RoleName.ROLE_USER).orElseThrow(
                             ()->new RuntimeException("Role not found"));
                     roles.add(userRole);
 
@@ -89,8 +89,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        return ResponseEntity.ok(new JwtResponse(userPrinciple.getId(), token, userPrinciple.getName(), userPrinciple.getAvatar(),
-                userPrinciple.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(token,userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(),userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
     }
 
     @PutMapping("/change-pasword")

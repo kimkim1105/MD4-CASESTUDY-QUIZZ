@@ -39,8 +39,7 @@ public class QuestionController {
     }
     @PostMapping
     public ResponseEntity<?> saveQuestion(@RequestBody Question question){
-        questionService.save(question);
-        return new ResponseEntity<>(new ResponMessage("create success"), HttpStatus.CREATED);
+        return new ResponseEntity<>(questionService.save(question), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Question> findQuestionById(@PathVariable Long id) {
@@ -49,6 +48,23 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
+    }
+    @GetMapping("/new-question")
+    public ResponseEntity<Question> findNewQuestion() {
+        Optional<Question> questionOptional = questionService.findNeweastQuestion();
+        if (!questionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<Question>> searchQuestion(@RequestParam String contents,
+                                                   @RequestParam Long type_id,
+                                                   @RequestParam Long category_id,
+                                                   @RequestParam Long level_id) {
+
+        return new ResponseEntity<>(questionService.searchQuestion("%"+contents+"%"
+        ,type_id,category_id,level_id), HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> updateQuestion(@PathVariable Long id, @RequestBody Question question) {
@@ -82,10 +98,16 @@ public class QuestionController {
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
+
     @GetMapping("/{id}/answers")
     public ResponseEntity<Iterable<Answer>> findAnswerByQuestion(@PathVariable Optional<String> id) {
         Optional<Question> question = questionService.findById(Long.valueOf(id.get()));
         Iterable<Answer> answers = answerService.findAllByQuestion(question.get());
         return new ResponseEntity<>(answers, HttpStatus.OK);
+    }
+    @GetMapping("/{test_id}/question")
+    public ResponseEntity<Iterable<Question>> getListCorrectQuestionByTest(@PathVariable Optional<String> test_id) {
+        Iterable<Question> questionList = questionService.getListQuestionByTest(Long.valueOf(test_id.get()));
+        return new ResponseEntity<>(questionList, HttpStatus.OK);
     }
 }
