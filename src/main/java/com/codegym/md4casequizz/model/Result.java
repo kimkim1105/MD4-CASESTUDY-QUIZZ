@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "results")
@@ -33,7 +30,7 @@ public class Result {
     @ManyToMany
     @JoinTable(name = "result_answer",
             joinColumns = @JoinColumn(name = "result_id"),inverseJoinColumns = @JoinColumn(name = "answer_id"))
-    List<Answer> answers;
+    List<Answer> answers = new ArrayList<>();
 
     public Result(Long id, Test test, User user, Integer mark) {
         this.id = id;
