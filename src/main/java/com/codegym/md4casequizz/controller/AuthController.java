@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin("*")
@@ -113,4 +114,35 @@ public class AuthController {
             return new ResponseEntity<>(new ResponMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
+//    @PostMapping("/edit/{id}")
+//    public ResponseEntity<?> editById(@PathVariable Long id,@Valid @RequestBody SignUpForm signUpForm) {
+//        Optional<User> user1=userService.findById(id);
+////        if (userService.existsByUsername(signUpForm.getUsername())) {
+////            return new ResponseEntity<>(new ResponMessage("no_user"), HttpStatus.OK);
+////        }
+////        if (userService.existsByEmail(signUpForm.getEmail())) {
+////            return new ResponseEntity<>(new ResponMessage("no_email"), HttpStatus.OK);
+////        }
+//            signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/blog-eab4c.appspot.com/o/images%2Fth%20(1).jpg?alt=media&token=aff3ee5b-f7c2-419a-98bb-9dd3e48041bd");
+//signUpForm.setName(user1.get().getName());
+//signUpForm.setUsername(user1.get().getUsername());
+//signUpForm.setPassword(user1.get().getPassword());
+//signUpForm.setEmail(user1.get().getEmail());
+//signUpForm.setAvatar(user1.get().getAvatar());
+//
+//        User user=new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getAvatar(), passwordEncoder.encode(signUpForm.getPassword()));
+//        Set<String> strRoles = signUpForm.getRoles();
+//        Set<Role> roles = new HashSet<>();
+//                    Role userRole=roleService.findByName(RoleName.USER).orElseThrow(
+//                            ()->new RuntimeException("Role not found"));
+//                    roles.add(userRole);
+//
+//
+//
+//        user.setRoles(roles);
+//
+//        userService.save(user);
+//        return new ResponseEntity<>(new ResponMessage("edit Account Success!"), HttpStatus.OK);
+//    }
+
 }
