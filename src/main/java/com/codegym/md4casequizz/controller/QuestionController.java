@@ -63,7 +63,7 @@ public class QuestionController {
                                                    @RequestParam Long category_id,
                                                    @RequestParam Long level_id) {
 
-        return new ResponseEntity<>(questionService.searchQuestion("%"+contents+"%"
+        return new ResponseEntity<>(questionService.searchQuestion('%'+contents+'%'
         ,type_id,category_id,level_id), HttpStatus.OK);
     }
     @PutMapping("/{id}")
