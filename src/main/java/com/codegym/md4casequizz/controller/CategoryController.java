@@ -23,7 +23,7 @@ public class CategoryController {
     private IQuestionService questionService;
 
     @PostMapping
-    public ResponseEntity<?> saveCategory(@RequestBody Category category){
+    public ResponseEntity<?> saveCategory(@RequestBody Category category) {
         categoryService.save(category);
         return new ResponseEntity<>(new ResponMessage("create success"), HttpStatus.CREATED);
     }
@@ -34,15 +34,22 @@ public class CategoryController {
         if (!categoryOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        List<Question> questions = (List<Question>) questionService.findAllByCategory(categoryOptional.get());
+        if (questions.size() != 0) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
         categoryService.remove(id);
         return new ResponseEntity<>(categoryOptional.get(), HttpStatus.NO_CONTENT);
     }
+
     @GetMapping("/{id}/questions")
-    public ResponseEntity<Iterable<Question>> findQuestionByCategory (@PathVariable Optional<String> id) {
+    public ResponseEntity<Iterable<Question>> findQuestionByCategory(@PathVariable Optional<String> id) {
         Optional<Category> category = categoryService.findById(Long.valueOf(id.get()));
         Iterable<Question> questions = questionService.findAllByCategory(category.get());
         return new ResponseEntity<>(questions, HttpStatus.OK);
+
     }
+
     @GetMapping
     public ResponseEntity<Iterable<Category>> listCategory() {
         Iterable<Category> categories = categoryService.findAll();

@@ -37,6 +37,10 @@ public class ResultController {
     public  ResponseEntity<Iterable<Result>> getAllResult(){
         return new ResponseEntity<>(resultService.findAll(),HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public  ResponseEntity<Result> getResultById(@PathVariable Long id){
+        return new ResponseEntity<>(resultService.findById(id).get(),HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Result> delete(@PathVariable Long id) {

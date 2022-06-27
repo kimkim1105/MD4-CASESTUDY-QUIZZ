@@ -63,7 +63,7 @@ public class QuestionController {
                                                    @RequestParam Long category_id,
                                                    @RequestParam Long level_id) {
 
-        return new ResponseEntity<>(questionService.searchQuestion("%"+contents+"%"
+        return new ResponseEntity<>(questionService.searchQuestion('%'+contents+'%'
         ,type_id,category_id,level_id), HttpStatus.OK);
     }
     @PutMapping("/{id}")
@@ -105,9 +105,5 @@ public class QuestionController {
         Iterable<Answer> answers = answerService.findAllByQuestion(question.get());
         return new ResponseEntity<>(answers, HttpStatus.OK);
     }
-    @GetMapping("/{test_id}/question")
-    public ResponseEntity<Iterable<Question>> getListCorrectQuestionByTest(@PathVariable Optional<String> test_id) {
-        Iterable<Question> questionList = questionService.getListQuestionByTest(Long.valueOf(test_id.get()));
-        return new ResponseEntity<>(questionList, HttpStatus.OK);
-    }
+
 }

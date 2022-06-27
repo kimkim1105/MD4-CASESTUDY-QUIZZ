@@ -41,4 +41,9 @@ public class AnswerService implements IAnswerService {
     public Iterable<Answer> getWrongAnswer(Long test_id, Long result_id) {
         return answerRepository.getWrongAnswer(test_id, result_id);
     }
+
+    @Override
+    public Iterable<Answer> getListQuestionByTest(Long test_id) {
+        return answerRepository.getListQuestionByTest(test_id);
+    }
 }

@@ -52,8 +52,4 @@ public class QuestionService implements IQuestionService {
         return questionRepository.findNeweastQuestion();
     }
 
-    @Override
-    public Iterable<Question> getListQuestionByTest(Long test_id) {
-        return testRepository.getListQuestionByTest(test_id);
-    }
 }

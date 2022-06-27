@@ -14,8 +14,8 @@ public interface ITestRepository extends JpaRepository<Test, Long> {
     Iterable<Test> findAllByNameContaining(String name);
     Iterable<Test> findAllByLevel (Level level);
     Iterable<Test> findAllByQuestions (Question question);
-    @Query(value = "select q.*\n" +
-            "from questions q left join test_ques tq on tq.ques_id = q.id group by q.id having q.id\n" +
-            " in (select ques_id from test_ques where test_id = :test_id);",nativeQuery = true)
-    Iterable<Question> getListQuestionByTest(Long test_id);
+//    @Query(value = "select q.*\n" +
+//            "from questions q left join test_ques tq on tq.ques_id = q.id group by q.id having q.id\n" +
+//            " in (select ques_id from test_ques where test_id = :test_id);",nativeQuery = true)
+//    Iterable<Question> getListQuestionByTest(Long test_id);
 }
