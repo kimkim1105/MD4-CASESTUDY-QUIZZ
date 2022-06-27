@@ -52,7 +52,7 @@ public class TestController {
 
     @GetMapping
     public ResponseEntity<Iterable<Test>> findAll() {
-        Iterable<Test> tests = testService.findAll();
+        Iterable<Test> tests = testService.findAllOrderByDate();
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 

@@ -52,4 +52,9 @@ public class QuestionService implements IQuestionService {
         return questionRepository.findNeweastQuestion();
     }
 
+    @Override
+    public Iterable<Question> findAllOrderByDate() {
+        return questionRepository.findAllOrderByDate();
+    }
+
 }

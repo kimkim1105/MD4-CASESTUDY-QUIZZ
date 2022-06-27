@@ -55,6 +55,10 @@ public class TestService implements ITestService{
         return testRepository.findAllByQuestions(question);
     }
 
+    @Override
+    public Iterable<Test> findAllOrderByDate() {
+        return testRepository.findAllOrderByDate();
+    }
 
 
 }

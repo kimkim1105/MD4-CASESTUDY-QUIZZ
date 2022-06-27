@@ -8,8 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ITestRepository extends JpaRepository<Test, Long> {
+    @Query(value = "select *\n" +
+            "from tests order by date desc ;",nativeQuery = true)
+    Iterable<Test> findAllOrderByDate();
     Iterable<Test> findAllByUser (User user);
     Iterable<Test> findAllByNameContaining(String name);
     Iterable<Test> findAllByLevel (Level level);
