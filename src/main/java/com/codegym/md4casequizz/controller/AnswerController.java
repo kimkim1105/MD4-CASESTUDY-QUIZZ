@@ -2,6 +2,7 @@ package com.codegym.md4casequizz.controller;
 
 import com.codegym.md4casequizz.dto.response.ResponMessage;
 import com.codegym.md4casequizz.model.Answer;
+import com.codegym.md4casequizz.model.Question;
 import com.codegym.md4casequizz.model.Result;
 import com.codegym.md4casequizz.service.answer.IAnswerService;
 import com.codegym.md4casequizz.service.result.IResultService;
@@ -66,6 +67,12 @@ public class AnswerController {
         Long test_id = resultOptional.get().getTest().getId();
         Long result_id = resultOptional.get().getId();
         List<Answer> answers = (List<Answer>) answerService.getWrongAnswer(test_id,result_id);
+        return new ResponseEntity<>(answers, HttpStatus.OK);
+    }
+
+    @GetMapping("/{test_id}/correct")
+    public ResponseEntity<Iterable<Answer>> getListCorrectQuestionByTest(@PathVariable Optional<String> test_id) {
+        Iterable<Answer> answers = answerService.getListQuestionByTest(Long.valueOf(test_id.get()));
         return new ResponseEntity<>(answers, HttpStatus.OK);
     }
 
