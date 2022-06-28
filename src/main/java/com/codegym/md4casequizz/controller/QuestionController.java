@@ -35,7 +35,7 @@ public class QuestionController {
 
     @GetMapping
     public ResponseEntity<Iterable<Question>> showListQuestion(){
-        return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(questionService.findAllOrderByDate(), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<?> saveQuestion(@RequestBody Question question){
@@ -43,6 +43,14 @@ public class QuestionController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Question> findQuestionById(@PathVariable Long id) {
+        Optional<Question> questionOptional = questionService.findById(id);
+        if (!questionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(questionOptional.get(), HttpStatus.OK);
+    }
+    @GetMapping("/{id}/user")
+    public ResponseEntity<Question> findQuestionByUserId(@PathVariable Long id) {
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

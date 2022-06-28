@@ -16,5 +16,6 @@ public interface IQuestionRepository extends JpaRepository<Question,Long> {
     Iterable<Question> findAllByCategory(Category category);
     @Query(value = "select * from questions order by id desc limit 1",nativeQuery = true)
     Optional<Question> findNeweastQuestion();
-
+    @Query(value = "select * from questions order by id desc ;",nativeQuery = true)
+    Iterable<Question> findAllOrderByDate();
 }

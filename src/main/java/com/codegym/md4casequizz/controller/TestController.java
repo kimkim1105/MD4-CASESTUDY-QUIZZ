@@ -52,7 +52,7 @@ public class TestController {
 
     @GetMapping
     public ResponseEntity<Iterable<Test>> findAll() {
-        Iterable<Test> tests = testService.findAll();
+        Iterable<Test> tests = testService.findAllOrderByDate();
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
@@ -69,8 +69,8 @@ public class TestController {
     }
 
     @GetMapping("/{id}/results")
-    public ResponseEntity<Iterable<Result>> findResultByTest(@PathVariable Optional<String> id) {
-        Optional<Test> testOptional = testService.findById(Long.valueOf(id.get()));
+    public ResponseEntity<Iterable<Result>> findResultByTest(@PathVariable Long id) {
+        Optional<Test> testOptional = testService.findById(id);
         Iterable<Result> results = resultService.findAllByTest(testOptional.get());
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
