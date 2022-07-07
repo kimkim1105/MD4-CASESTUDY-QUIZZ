@@ -1,8 +1,6 @@
 package com.codegym.md4casequizz.controller;
 
-import com.codegym.md4casequizz.dto.request.ChangePasswordForm;
-import com.codegym.md4casequizz.dto.request.SignInForm;
-import com.codegym.md4casequizz.dto.request.SignUpForm;
+import com.codegym.md4casequizz.dto.request.*;
 import com.codegym.md4casequizz.dto.response.JwtResponse;
 import com.codegym.md4casequizz.dto.response.ResponMessage;
 import com.codegym.md4casequizz.model.Role;
@@ -31,7 +29,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin("*")
-@RequestMapping("/api/auth")
+@RequestMapping("")
 @RestController
 public class AuthController {
     @Autowired
@@ -92,7 +90,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token,userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(),userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
     }
 
-    @PutMapping("/change-pasword")
+    @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(HttpServletRequest request, @Valid @RequestBody ChangePasswordForm changePasswordForm){
         String jwt = jwtTokenFilter.getJwt(request);
         String username = jwtProvider.getUserNameToken(jwt);
@@ -113,35 +111,49 @@ public class AuthController {
             return new ResponseEntity<>(new ResponMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
-//    @PostMapping("/edit/{id}")
-//    public ResponseEntity<?> editById(@PathVariable Long id,@Valid @RequestBody SignUpForm signUpForm) {
-//        Optional<User> user1=userService.findById(id);
-////        if (userService.existsByUsername(signUpForm.getUsername())) {
-////            return new ResponseEntity<>(new ResponMessage("no_user"), HttpStatus.OK);
-////        }
-////        if (userService.existsByEmail(signUpForm.getEmail())) {
-////            return new ResponseEntity<>(new ResponMessage("no_email"), HttpStatus.OK);
-////        }
-//            signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/blog-eab4c.appspot.com/o/images%2Fth%20(1).jpg?alt=media&token=aff3ee5b-f7c2-419a-98bb-9dd3e48041bd");
-//signUpForm.setName(user1.get().getName());
-//signUpForm.setUsername(user1.get().getUsername());
-//signUpForm.setPassword(user1.get().getPassword());
-//signUpForm.setEmail(user1.get().getEmail());
-//signUpForm.setAvatar(user1.get().getAvatar());
-//
-//        User user=new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getAvatar(), passwordEncoder.encode(signUpForm.getPassword()));
-//        Set<String> strRoles = signUpForm.getRoles();
-//        Set<Role> roles = new HashSet<>();
-//                    Role userRole=roleService.findByName(RoleName.USER).orElseThrow(
-//                            ()->new RuntimeException("Role not found"));
-//                    roles.add(userRole);
-//
-//
-//
-//        user.setRoles(roles);
-//
-//        userService.save(user);
-//        return new ResponseEntity<>(new ResponMessage("edit Account Success!"), HttpStatus.OK);
-//    }
+    @PutMapping("/change-avatar")
+    public ResponseEntity<?> changeAvatar(HttpServletRequest request, @Valid @RequestBody ChangeAvatar changeAvatar){
+        String jwt=jwtTokenFilter.getJwt(request);
+        String username=jwtProvider.getUserNameToken(jwt);
+   User user;
+           try{
+                if (changeAvatar.getAvatar()==null){
+                    return new ResponseEntity<>(new ResponMessage("no avatar"),HttpStatus.OK);
+                }else {
+                    user=userService.findByUsername(username).orElseThrow(()->
+                            new UsernameNotFoundException("Username not found -> username"+username));
+               user.setAvatar(changeAvatar.getAvatar());
+               userService.save(user);
+                }
+               return new ResponseEntity<>(new ResponMessage("success"),HttpStatus.OK);
+
+           }catch (UsernameNotFoundException exception){
+               return new ResponseEntity<>(new ResponMessage(exception.getMessage()),HttpStatus.NOT_FOUND);
+           }
+    }
+    @PutMapping("/change-profile")
+    public ResponseEntity<?> changeProfile(HttpServletRequest request, @Valid @RequestBody ChangeProfileForm changeProfileForm){
+        String jwt=jwtTokenFilter.getJwt(request);
+        String username=jwtProvider.getUserNameToken(jwt);
+        User user;
+        try {
+            if (userService.existsByUsername(changeProfileForm.getUsername())){
+                return new ResponseEntity<>(new ResponMessage("no user"),HttpStatus.OK);
+            }
+            if (userService.existsByEmail(changeProfileForm.getEmail())){
+                return new ResponseEntity<>(new ResponMessage("no email"),HttpStatus.OK);
+
+            }
+            user=userService.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found with -> username"+username));
+            user.setName(changeProfileForm.getName());
+            user.setUsername(changeProfileForm.getUsername());
+            user.setEmail(changeProfileForm.getEmail());
+            userService.save(user);
+            return new ResponseEntity<>(new ResponMessage("success!!!!!!"),HttpStatus.OK);
+
+        }catch (UsernameNotFoundException exception){
+            return new ResponseEntity<>(new ResponMessage(exception.getMessage()),HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
