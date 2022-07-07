@@ -3,6 +3,8 @@ package com.codegym.md4casequizz.service.user;
 import com.codegym.md4casequizz.model.User;
 import com.codegym.md4casequizz.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -32,6 +34,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Iterable<User> showList() {
         return userRepository.findAll();
+    }
+
+
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override

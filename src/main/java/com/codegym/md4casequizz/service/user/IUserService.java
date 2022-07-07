@@ -1,6 +1,8 @@
 package com.codegym.md4casequizz.service.user;
 
 import com.codegym.md4casequizz.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 import java.util.Optional;
@@ -16,5 +18,7 @@ public interface IUserService {
     void deleteById(Long id);
     Optional<User> findById(Long id);
     Iterable<User> showList();
+    Page<User> findAll(Pageable pageable);//page user
+
 
 }
