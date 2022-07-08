@@ -4,13 +4,26 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "categories",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "name"
+        })
+})
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
     private String name;
+
+    @ManyToOne
+    User user;
+
+    public Category(Long id, String name, User user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
 
     public Category() {
     }
@@ -36,5 +49,12 @@ public class Category {
         this.name = name;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
 
