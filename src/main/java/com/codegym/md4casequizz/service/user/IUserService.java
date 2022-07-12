@@ -19,6 +19,7 @@ public interface IUserService {
     Optional<User> findById(Long id);
     Iterable<User> showList();
     Page<User> findAll(Pageable pageable);//page user
+    Page<User> findAllByUsernameContaining(String username,Pageable pageable);
 
 
 }

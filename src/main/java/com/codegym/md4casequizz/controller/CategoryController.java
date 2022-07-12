@@ -86,4 +86,56 @@ public class CategoryController {
 
         return new ResponseEntity<>(new ResponMessage("create failed"), HttpStatus.OK);
     }
+    @DeleteMapping("/delete-category/{id}")
+    public ResponseEntity<?> deleteCategoryById(@PathVariable Long id) {
+        Optional<Category> categoryOptional = categoryService.findById(id);
+        if (!categoryOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+//        List<Question> questions = (List<Question>) questionService.findAllByCategory(categoryOptional.get());
+//        if (questions.size() != 0) {
+//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+        categoryService.remove(categoryOptional.get().getId());
+        return new ResponseEntity<>(new ResponMessage("delete success"), HttpStatus.OK);
+    }
+    //cach 1 dung @Pathvariable
+//    @GetMapping("/search/{name}")
+//    public ResponseEntity<?> searchByCategoryname(@PathVariable String name,@PageableDefault(sort = "name",direction = Sort.Direction.ASC)Pageable pageable){
+//        Page<Category> categoryPage=categoryService.findAllByNameContaining(name,pageable);
+//        if (categoryPage.isEmpty()){
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(categoryPage,HttpStatus.OK);
+//    }
+    //cach2 dung @Requesparam
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByUsernameContaining(@RequestParam ("name") String search,@PageableDefault(sort = "name",direction = Sort.Direction.ASC)Pageable pageable){
+        Page<Category> categoryPage=categoryService.findAllByNameContaining(search,pageable);
+        if (categoryPage.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(categoryPage,HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> detailCategory(@PathVariable Long id){
+        Optional<Category> category=categoryService.findById(id);
+        if (!category.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(category,HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id,@RequestBody Category category){
+        Optional<Category> category1=categoryService.findById(id);
+        if (!category1.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (categoryService.existsByName(category.getName())){
+            return new ResponseEntity<>(new ResponMessage("category is existed"),HttpStatus.OK);
+        }
+        category1.get().setName(category.getName());
+        categoryService.save(category1.get());
+        return new ResponseEntity<>(new ResponMessage("update success"),HttpStatus.OK);
+    }
 }

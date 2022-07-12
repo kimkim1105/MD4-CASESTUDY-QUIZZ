@@ -1,9 +1,7 @@
 package com.codegym.md4casequizz.controller;
 
 import com.codegym.md4casequizz.dto.response.ResponMessage;
-import com.codegym.md4casequizz.model.Result;
-import com.codegym.md4casequizz.model.Test;
-import com.codegym.md4casequizz.model.User;
+import com.codegym.md4casequizz.model.*;
 import com.codegym.md4casequizz.repository.IResultRepository;
 import com.codegym.md4casequizz.service.result.IResultService;
 import com.codegym.md4casequizz.service.test.ITestService;
@@ -17,7 +15,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.codegym.md4casequizz.model.Role;
 
 import java.util.Optional;
 
@@ -82,8 +79,43 @@ public class UserController {
            return new ResponseEntity<>(userPage,HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(userPage,HttpStatus.OK);
-
-
+    }
+    //cach 1 dung @Pathvariable
+//    @GetMapping("/search/{username}")
+//    public ResponseEntity<?> searchByUsername(@PathVariable String username,@PageableDefault(sort = "username",direction = Sort.Direction.ASC)Pageable pageable){
+//       Page<User> userPage=userService.findAllByUsernameContaining(username,pageable);
+//       if (userPage.isEmpty()){
+//           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//       }
+//       return new ResponseEntity<>(userPage,HttpStatus.OK);
+//    }
+    //cach2 dung @Requesparam
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByUsernameContaining(@RequestParam ("username") String search,@PageableDefault(sort = "username",direction = Sort.Direction.ASC)Pageable pageable){
+        Page<User> userPage=userService.findAllByUsernameContaining(search,pageable);
+        if (userPage.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(userPage,HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id,@RequestBody User user){
+        Optional<User> userOptional=userService.findById(id);
+        if (!userOptional.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (userService.existsByUsername(user.getName())){
+            return new ResponseEntity<>(new ResponMessage("username is existed"),HttpStatus.OK);
+        }
+        if (userService.existsByEmail(user.getEmail())){
+            return new ResponseEntity<>(new ResponMessage("email is existed"),HttpStatus.OK);
+        }
+        userOptional.get().setName(user.getName());
+        userOptional.get().setUsername(user.getUsername());
+        userOptional.get().setEmail(user.getEmail());
+        userOptional.get().setRoles(user.getRoles());
+        userService.save(userOptional.get());
+        return new ResponseEntity<>(new ResponMessage("update success"),HttpStatus.OK);
     }
 }
 

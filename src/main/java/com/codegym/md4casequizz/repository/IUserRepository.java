@@ -1,6 +1,8 @@
 package com.codegym.md4casequizz.repository;
 
 import com.codegym.md4casequizz.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +18,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     //kt xem email da co torng DB chua khi tao du lieu
     Boolean existsByEmail(String email);
+    Page<User> findAllByUsernameContaining(String username, Pageable pageable);
 }

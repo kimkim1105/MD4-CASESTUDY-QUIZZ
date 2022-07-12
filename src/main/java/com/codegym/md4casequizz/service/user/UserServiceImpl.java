@@ -51,6 +51,10 @@ public class UserServiceImpl implements IUserService {
         userRepository.deleteById(id);
     }
 
+    public Page<User> findAllByUsernameContaining(String username,Pageable pageable) {
+        return userRepository.findAllByUsernameContaining(username,pageable);
+    }
+
     @Override
     public User save(User user) {
         return userRepository.save(user);

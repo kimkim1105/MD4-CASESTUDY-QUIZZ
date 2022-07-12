@@ -32,6 +32,10 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.existsByName(name);
     }
 
+    public Page<Category> findAllByNameContaining(String name, Pageable pageable) {
+        return categoryRepository.findAllByNameContaining(name,pageable);
+    }
+
     @Override
     public Category save(Category category) {
         User user=userDetailService.getCurrentUser();
